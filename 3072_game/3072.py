@@ -15,7 +15,7 @@ pygame.display.set_caption(TITLE)
 
 # Timer
 clock = pygame.time.Clock()
-refresh_rate = 60
+refresh_rate = 30
 
 # Colors
 RED = (255, 0, 0)
@@ -107,20 +107,20 @@ while not done:
         if e[1] > 519:
             e[0] = random.randrange(519, 679)
             e[1] = 376
-    p_enemy = [e[0], e[1], 5, 5]
-    
-    #Game logic
-    for e in enemy:
-        if intersects.rect_rect(player2, p_enemy):
-            hit = True
-
-    if hit == True:
-        ship_health -= 10
-        hit = False
         
-    if ship_health == 0:
-        print('Game Over')
-        ship_health == 100
+    #Game logic
+    hit_list = [e for e in enemy if intersects.rect_rect(player2, [e[0], e[1], 5, 5])]
+    if len(hit_list) == 0:
+        hit = False
+    else:
+        if hit == False:
+            ship_health -= 10
+            hit = True
+            print('hit')
+
+        if ship_health == 0:
+            print('Game Over')
+            ship_health == 100
         
     ''' move the player in horizontal direction '''    
     player1[0] += player1_vx    
